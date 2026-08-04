@@ -1,121 +1,39 @@
 <div align="center">
 
-<img src="packaging/warpzone.svg" width="96" alt="">
+<img src="packaging/warpzone.svg" width="88" alt="">
 
 # Warpzone
 
-**Pula o navegador inteiro e cai direto no site que você quer.**
-
-Transforma qualquer URL num app desktop de verdade — sem abas, sem barra de endereço,
-sem extensão, sem "restaurar sessão". Só o conteúdo, numa janela de vidro que segue
-o tema do seu desktop.
+Abre qualquer URL como aplicativo desktop: uma janela, sem abas,
+sem barra de endereço, sem menu.
 
 [![Linux](https://img.shields.io/badge/Linux-Wayland%20%7C%20X11-4c566a?style=flat-square&logo=linux&logoColor=white)](#requisitos)
 [![Python](https://img.shields.io/badge/Python-3.11%2B-3776ab?style=flat-square&logo=python&logoColor=white)](#requisitos)
-[![WebKitGTK](https://img.shields.io/badge/WebKitGTK-4.1-1d99f3?style=flat-square)](#como-funciona)
+[![WebKitGTK](https://img.shields.io/badge/WebKitGTK-4.1-1d99f3?style=flat-square)](#arquitetura)
 [![Dependências](https://img.shields.io/badge/depend%C3%AAncias-zero-3fb950?style=flat-square)](#requisitos)
-[![Testes](https://img.shields.io/badge/testes-65%20passing-3fb950?style=flat-square)](#testes)
+[![Testes](https://img.shields.io/badge/testes-65%20passing-3fb950?style=flat-square)](#desenvolvimento)
+[![Licença](https://img.shields.io/badge/licen%C3%A7a-MIT-blue?style=flat-square)](LICENSE)
 
-<img src="docs/launcher.png" alt="Launcher do Warpzone: campo de URL e grade de favoritos em vidro sobre o wallpaper borrado" width="720">
+<img src="docs/launcher.png" width="720"
+     alt="Launcher do Warpzone: campo de URL e grade de favoritos em vidro sobre o wallpaper borrado">
 
 </div>
 
 ---
 
-## O nome
+## Recursos
 
-No Super Mario Bros, a Warp Zone é o cano que pula o jogo inteiro e te larga
-exatamente no mundo que você queria. É isso que este app faz com uma URL: nada de
-atravessar abas, favoritos e sessão restaurada pra chegar num painel que roda em
-`localhost`. Você entra no cano e já está lá.
-
-## Por que isso existe
-
-Você roda um painel em `localhost:5173`. Abrir ele num navegador significa carregar
-uma janela com 40 abas, um gerenciador de senhas pedindo atenção, e a sua sessão de
-trabalho misturada com a do YouTube.
-
-O Warpzone abre esse painel como se fosse um aplicativo instalado: entrada no menu,
-ícone próprio, janela limpa. E como ele não é amarrado a nenhum site específico,
-serve pra qualquer URL que você queira tratar como app.
-
-## Destaques
-
-| | |
-|---|---|
-| 🪟 **Zero cromo** | Sem abas, sem barra de endereço, sem menu. A janela inteira é o site. |
-| 🔮 **Vidro de verdade** | A janela tem canal alfa e quem borra o fundo é o compositor — não é `backdrop-filter` fingindo profundidade. |
-| 🎨 **Tema vivo** | As cores saem do [Caelestia](https://github.com/caelestia-dots/shell) em tempo de execução. Trocou o wallpaper, o app acompanha. |
-| ⭐ **Favoritos seus** | Começa vazio. Você adiciona, edita e remove pela própria tela, com seletor de ícone. |
-| ⌨️ **Só teclado** | Filtro ao vivo, `Enter` abre, `Ctrl+D` favorita, `Ctrl+L` volta. |
-| 📦 **Dependência zero** | Nada de `pip install`, nada de Electron. Usa o que já vem no sistema. |
-
-## Instalar
-
-```sh
-git clone git@github.com:LuisMarchio03/warpzone.git
-cd warpzone
-sh packaging/install.sh
-```
-
-Isso cria `~/.local/bin/warpzone` e a entrada **Warpzone** no menu de aplicativos.
-Não usa `sudo` e não escreve nada fora da sua `$HOME`.
-
-> O instalador **não copia o código** — ele aponta pro repositório onde você clonou.
-> Mexeu no CSS? Fecha e abre o app, a mudança já está lá.
-
-Pra remover: `sh packaging/uninstall.sh` (seus favoritos ficam; `--tudo` apaga eles também).
-
-## Usar
-
-```sh
-warpzone                          # abre o launcher
-warpzone localhost:5173           # vai direto, completando o http://
-warpzone grafana.exemplo.dev      # completa o https://
-```
-
-Ou simplesmente procure **Warpzone** no launcher do seu desktop.
-
-### Atalhos
-
-| Tecla | O que faz |
-|:---|:---|
-| `Ctrl` `L` | volta ao launcher |
-| `Ctrl` `R` | recarrega (no launcher, redesenha) |
-| `Ctrl` `D` | favorita a página atual |
-| `Alt` `←` / `Alt` `→` | histórico — do launcher, retoma o último site |
-| `F11` | tela cheia |
-| `Ctrl` `Shift` `I` | inspetor do WebKit |
-| `Ctrl` `Q` | sair |
-| `Esc` | limpa o filtro / fecha o formulário |
-
-No launcher, digitar filtra os favoritos ao vivo. `Enter` abre o primeiro
-resultado — ou navega direto, se o que você digitou parecer uma URL.
-
-### Favoritos
-
-<img src="docs/favoritos.png" alt="Formulário de favorito com campos nome, URL e seletor de ícone" width="420" align="right">
-
-Clique em **+ novo favorito** para abrir o formulário. Você escolhe:
-
-- **nome** — o rótulo do card
-- **URL** — pode omitir o esquema; `localhost:3000` vira `http://localhost:3000`
-- **ícone** — qualquer glifo do [Material Symbols Rounded](https://fonts.google.com/icons), com 24 sugestões clicáveis e preview ao vivo
-
-O lápis no card edita, o × remove. Tudo grava na hora em
-`~/.config/warpzone/bookmarks.json`, que também dá pra editar na mão:
-
-```json
-[
-  { "nome": "Painel", "url": "http://127.0.0.1:5173", "icone": "dashboard" }
-]
-```
-
-<br clear="right">
+- **Janela sem cromo.** Sem abas, barra de endereço ou menu — a janela inteira é o conteúdo.
+- **Launcher com favoritos.** Campo de URL com filtro ao vivo e grade de atalhos, editável na própria tela.
+- **Tema dinâmico.** As cores são lidas do esquema do [Caelestia](https://github.com/caelestia-dots/shell) em tempo de execução.
+- **Transparência real.** A janela tem canal alfa; o desfoque é do compositor, não CSS.
+- **Navegação por teclado.** Todas as ações têm atalho; não há controles de navegação na tela.
+- **Sessão persistente.** Cookies e `localStorage` sobrevivem ao fechamento.
+- **Diagnóstico de falha.** Numa URL local que não responde, identifica a unit `systemd` parada e mostra o comando para subir.
 
 ## Requisitos
 
-Tudo vem dos repositórios da distro — **nenhum pacote Python é instalado**.
+Todas as dependências vêm dos repositórios da distribuição. Nenhum pacote Python é instalado.
 
 ```sh
 # Arch / CachyOS
@@ -125,52 +43,120 @@ sudo pacman -S --needed python-gobject gtk3 webkit2gtk-4.1
 sudo apt install python3-gi gir1.2-webkit2-4.1
 ```
 
-O `install.sh` confere isso antes de instalar e avisa o que falta.
+O instalador verifica esses pré-requisitos e aborta indicando o que falta.
 
-**Opcionais:** fontes `Rubik`, `Material Symbols Rounded` e `CaskaydiaCove NF`
-(o app cai em fontes do sistema sem elas, mas os ícones viram texto). O blur é do
-compositor — em Hyprland, KWin ou Hyprland-likes ele aparece sozinho; em ambientes
-sem blur o app continua funcionando, só mais opaco.
+**Opcionais:** as fontes `Rubik`, `Material Symbols Rounded` e `CaskaydiaCove NF`. Sem elas a
+aplicação recorre às fontes do sistema e os ícones são exibidos como texto. O desfoque depende do
+compositor (Hyprland, KWin e equivalentes); onde não houver, a janela apenas fica mais opaca.
 
-## Como funciona
+## Instalação
 
-Uma janela GTK3 sem decoração com **um único `WebKit2.WebView`**, que alterna entre
-dois estados: o *launcher* (HTML local, injetado por `load_html`) e o *site* (URL
-remota). O JavaScript fala com o Python por `window.webkit.messageHandlers`.
+```sh
+git clone git@github.com:LuisMarchio03/warpzone.git
+cd warpzone
+sh packaging/install.sh
+```
+
+Instala `~/.local/bin/warpzone` e a entrada **Warpzone** no menu de aplicativos. Não requer `sudo`
+e não escreve fora de `$HOME`.
+
+O executável instalado referencia o diretório clonado em vez de copiar o código: alterações no
+repositório valem na próxima abertura, sem reinstalar.
+
+| Comando | Efeito |
+|:---|:---|
+| `sh packaging/install.sh` | instala e abre uma vez para verificação |
+| `sh packaging/install.sh --no-abrir` | instala sem abrir |
+| `sh packaging/uninstall.sh` | remove a aplicação, preserva favoritos e cookies |
+| `sh packaging/uninstall.sh --tudo` | remove também os dados do usuário |
+
+## Uso
+
+```sh
+warpzone                        # abre o launcher
+warpzone localhost:5173         # abre a URL, completando o esquema http://
+warpzone grafana.exemplo.dev    # abre a URL, completando o esquema https://
+```
+
+O launcher também é acessível pela entrada **Warpzone** no menu de aplicativos.
+
+No campo de URL, digitar filtra os favoritos em tempo real. `Enter` abre o primeiro resultado do
+filtro ou navega diretamente, quando o texto tem forma de endereço.
+
+### Atalhos
+
+| Tecla | Ação |
+|:---|:---|
+| `Ctrl` `L` | retorna ao launcher |
+| `Ctrl` `R` | recarrega a página; no launcher, redesenha |
+| `Ctrl` `D` | adiciona a página atual aos favoritos |
+| `Alt` `←` / `Alt` `→` | histórico; a partir do launcher, retoma o último site |
+| `F11` | tela cheia |
+| `Ctrl` `Shift` `I` | inspetor do WebKit |
+| `Ctrl` `Q` | encerra |
+| `Esc` | limpa o filtro ou fecha o formulário |
+
+### Favoritos
+
+<img src="docs/favoritos.png" width="400" align="right"
+     alt="Formulário de favorito com campos nome, URL e seletor de ícone">
+
+O card **+ novo favorito** abre o formulário de cadastro, com três campos:
+
+- **nome** — rótulo exibido no card
+- **URL** — o esquema é opcional; `localhost:3000` é normalizado para `http://localhost:3000`
+- **ícone** — qualquer glifo do [Material Symbols Rounded](https://fonts.google.com/icons), com 24 sugestões e pré-visualização
+
+O ícone de lápis edita o favorito; o × remove. As alterações são gravadas imediatamente em
+`~/.config/warpzone/bookmarks.json`, que também pode ser editado manualmente:
+
+```json
+[
+  { "nome": "Painel", "url": "http://127.0.0.1:5173", "icone": "dashboard" }
+]
+```
+
+<br clear="right">
+
+## Arquitetura
+
+Uma janela GTK3 sem decoração contendo um único `WebKit2.WebView`, alternando entre dois estados:
+o launcher (HTML local, carregado via `load_html`) e o site (URL remota). A comunicação entre
+JavaScript e Python usa `window.webkit.messageHandlers`.
 
 ```
 warpzone/
 ├── app.py             janela, atalhos, ponte JS↔Python
-├── __main__.py        entrada CLI
-├── urls.py            texto digitado → URL navegável
-├── scheme.py          scheme.json do Caelestia → CSS custom properties
-├── bookmarks.py       CRUD dos favoritos
-├── services.py        detecta serviço systemd parado numa falha local
-├── launcher_page.py   costura HTML + CSS + JS + dados numa página só
+├── __main__.py        entrada de linha de comando
+├── urls.py            normalização de entrada para URL navegável
+├── scheme.py          esquema do Caelestia → CSS custom properties
+├── bookmarks.py       persistência dos favoritos
+├── services.py        detecção de unit systemd parada
+├── launcher_page.py   composição de HTML, CSS, JS e dados numa página
 └── launcher/          index.html · style.css · app.js · error.html
 ```
 
-A regra de ouro do projeto: **toda lógica pura vive fora do `app.py`**, então a
-suíte de testes roda inteira sem abrir uma janela.
+Toda a lógica de domínio fica fora de `app.py`, de modo que a suíte de testes executa sem abrir
+uma janela.
 
-Três detalhes que custaram descoberta e estão documentados no código:
+### Notas de implementação
 
-1. `load_html()` **apaga o histórico** do WebView — por isso `Ctrl+R` e `Alt+←` usam
-   estado próprio em vez de delegar ao WebKit.
-2. Sem `set_background_color(alpha=0)` o WebKit pinta um fundo branco **por baixo**
-   do CSS, e o vidro nunca aparece.
-3. O véu translúcido precisa ficar em torno de 55% — acima disso o blur do
-   compositor some visualmente.
+1. `load_html()` descarta o histórico do `WebView` e define a URI como `about:blank`. O estado de
+   navegação (`_no_launcher`, `_ultima_uri`) é mantido pela aplicação em vez de consultado ao WebKit.
+2. Sem `set_background_color(alpha=0)` o WebKit desenha um fundo opaco abaixo do CSS, anulando a
+   transparência da janela.
+3. A opacidade do véu do launcher fica em 55%. Valores acima disso tornam o desfoque do compositor
+   visualmente imperceptível.
 
-### Onde ficam as coisas
+### Arquivos em disco
 
-| Caminho | O quê |
+| Caminho | Conteúdo |
 |:---|:---|
-| `~/.config/warpzone/bookmarks.json` | seus favoritos |
-| `~/.local/share/warpzone/` | cookies e localStorage do WebKit |
-| `~/.local/state/caelestia/scheme.json` | fonte das cores (somente leitura) |
+| `~/.config/warpzone/bookmarks.json` | favoritos |
+| `~/.local/share/warpzone/` | cookies e `localStorage` do WebKit |
+| `~/.local/state/caelestia/scheme.json` | origem das cores (somente leitura) |
 
-## Testes
+## Desenvolvimento
 
 ```sh
 uv venv --python /usr/bin/python3 --system-site-packages .venv
@@ -178,11 +164,11 @@ uv pip install --python .venv/bin/python pytest
 .venv/bin/pytest
 ```
 
-> O `--python /usr/bin/python3` é obrigatório: sem ele o `uv` cria o venv com um
-> CPython próprio e o `gi` — que é pacote de sistema — fica invisível.
+O parâmetro `--python /usr/bin/python3` é obrigatório: sem ele o `uv` provisiona um interpretador
+próprio e o módulo `gi`, instalado como pacote do sistema, não fica acessível.
 
-`app.py` não tem teste automatizado; é GTK puro, validado por smoke manual. Pra
-exercitar os atalhos sem tocar no teclado:
+`app.py` não possui testes automatizados por depender de GTK; é validado por verificação manual.
+Os atalhos podem ser acionados programaticamente:
 
 ```sh
 hyprctl dispatch sendshortcut "CTRL,L,class:^(warpzone)$"
@@ -190,4 +176,4 @@ hyprctl dispatch sendshortcut "CTRL,L,class:^(warpzone)$"
 
 ## Licença
 
-MIT — veja [LICENSE](LICENSE).
+MIT — consulte [LICENSE](LICENSE).
