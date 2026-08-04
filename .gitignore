@@ -2,3 +2,6 @@ __pycache__/
 *.py[cod]
 .venv/
 .pytest_cache/
+
+# registros de design/plano: ficam locais, fora do repo público
+docs/*.md
