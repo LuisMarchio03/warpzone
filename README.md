@@ -96,6 +96,30 @@ filtro ou navega diretamente, quando o texto tem forma de endereço.
 | `Ctrl` `Q` | encerra |
 | `Esc` | limpa o filtro ou fecha o formulário |
 
+### Atalho global
+
+A instalação não registra atalho de teclado. Para vincular um, no Hyprland:
+
+```conf
+# ~/.config/hypr/hyprland.conf (ou o arquivo de override da sua config)
+bind = SUPER SHIFT, W, exec, warpzone
+```
+
+```sh
+hyprctl reload
+hyprctl binds | grep -A3 'key: W'    # confirma que o bind foi registrado
+```
+
+Variações úteis:
+
+```conf
+bind = SUPER SHIFT, W, exec, warpzone http://127.0.0.1:5173   # abre sempre a mesma URL
+bind = SUPER SHIFT, W, exec, pkill -x warpzone || warpzone    # alterna abrir/fechar
+```
+
+O `exec` do compositor usa o `PATH` do processo do Hyprland, não o do seu shell. Se
+`~/.local/bin` não estiver nele, use o caminho absoluto do executável.
+
 ### Favoritos
 
 <img src="docs/favoritos.png" width="400" align="right"
