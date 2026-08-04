@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>não carregou</title>
+<style>/*__SCHEME__*/</style>
+<style>/*__STYLE__*/</style>
+<style>
+  .falha {
+    margin: auto;
+    max-width: 560px;
+    display: flex; flex-direction: column; align-items: center; gap: 16px;
+    padding: 40px; text-align: center;
+    border-radius: 30px;
+    background: rgba(var(--m3-surface-container-rgb), .55);
+    border: 1px solid rgba(var(--m3-outline-variant-rgb), .45);
+    backdrop-filter: blur(18px) saturate(1.25);
+    box-shadow: 0 20px 50px rgba(var(--m3-shadow-rgb), .4);
+  }
+  .falha__icon { font-size: 48px; color: var(--m3-error); }
+  .falha h1 { font-size: 21px; font-weight: 500; }
+  .falha__uri {
+    font-family: 'CaskaydiaCove NF', monospace; font-size: 12px;
+    color: var(--m3-on-surface-variant); word-break: break-all;
+  }
+  .falha__dica {
+    width: 100%; margin-top: 4px; padding: 13px 16px; border-radius: 16px;
+    text-align: left;
+    background: rgba(var(--m3-surface-container-highest-rgb), .7);
+    border: 1px solid rgba(var(--m3-outline-variant-rgb), .5);
+  }
+  .falha__dica p { font-size: 12px; color: var(--m3-on-surface-variant); margin-bottom: 6px; }
+  .falha__dica code {
+    font-family: 'CaskaydiaCove NF', monospace; font-size: 12px;
+    color: var(--m3-primary); user-select: all;
+  }
+  .falha__acoes { display: flex; gap: 10px; margin-top: 8px; }
+  /* .botao vive no style.css, compartilhado com o launcher */
+</style>
+</head>
+<body>
+  <div class="falha">
+    <span class="material-symbols-rounded falha__icon">cloud_off</span>
+    <h1>não deu pra abrir essa página</h1>
+    <span class="falha__uri">__URI__</span>
+    __DICA__
+    <div class="falha__acoes">
+      <button class="botao botao--principal" id="retry" data-uri="__URI__">
+        <span class="material-symbols-rounded">refresh</span>tentar de novo
+      </button>
+      <button class="botao" id="home">
+        <span class="material-symbols-rounded">grid_view</span>voltar ao launcher
+      </button>
+    </div>
+  </div>
+<script>
+  // A URI viaja por data-uri, não interpolada aqui dentro: atributo é
+  // decodificado como HTML, corpo de <script> não é.
+  const enviar = (canal, carga) => {
+    const h = window.webkit && window.webkit.messageHandlers
+      && window.webkit.messageHandlers[canal];
+    if (h) h.postMessage(carga);
+  };
+  const botaoRetry = document.getElementById('retry');
+  botaoRetry.addEventListener('click',
+    () => enviar('nav', botaoRetry.dataset.uri));
+  document.getElementById('home').addEventListener('click',
+    () => enviar('home', ''));
+</script>
+</body>
+</html>

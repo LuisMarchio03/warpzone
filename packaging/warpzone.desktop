@@ -1,0 +1,13 @@
+[Desktop Entry]
+Type=Application
+Name=Warpzone
+GenericName=Janela para um site só
+Comment=Abre uma URL numa janela limpa, sem abas nem barra de endereço
+Exec=warpzone %u
+Icon=warpzone
+Terminal=false
+Categories=Network;WebBrowser;
+MimeType=x-scheme-handler/http;x-scheme-handler/https;
+StartupWMClass=warpzone
+StartupNotify=true
+Keywords=browser;navegador;kiosk;webapp;janela;

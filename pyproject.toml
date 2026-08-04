@@ -1,0 +1,12 @@
+[project]
+name = "warpzone"
+version = "0.1.0"
+description = "Mini-browser desktop para o claude-cockpit, no padrão Caelestia"
+requires-python = ">=3.11"
+dependencies = []
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+# o pacote é usado direto da raiz (não é instalado); sem isto o import falha
+pythonpath = ["."]

@@ -1,0 +1,276 @@
+/* Glassmorphism no padrão Caelestia. Toda cor vem das vars geradas do
+   scheme.json; o alfa é aplicado sobre os triplets --m3-*-rgb. */
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body { height: 100%; overflow: hidden; }
+
+body {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  padding: 38px clamp(24px, 6vw, 96px) 22px;
+  color: var(--m3-on-surface);
+  font-family: Rubik, system-ui, sans-serif;
+  /* véu translúcido: dá corpo ao vidro sobre o blur do compositor */
+  background:
+    radial-gradient(120% 90% at 10% -10%, rgba(var(--m3-primary-rgb), .18) 0%, transparent 55%),
+    radial-gradient(90% 80% at 95% 5%, rgba(var(--m3-tertiary-rgb), .14) 0%, transparent 60%),
+    rgba(var(--m3-surface-rgb), .55);
+}
+
+.stage {
+  flex: 1;
+  width: 100%;
+  max-width: 1080px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 26px;
+}
+
+/* --- cabeçalho --- */
+.brand { display: flex; align-items: center; gap: 16px; }
+.brand__icon { font-size: 38px; color: var(--m3-primary); }
+.brand__mark { width: 40px; height: 40px; flex: 0 0 40px; color: var(--m3-primary); }
+.brand h1 { font-size: 25px; font-weight: 500; letter-spacing: -.01em; }
+.brand p {
+  margin-top: 2px;
+  font-family: 'CaskaydiaCove NF', monospace;
+  font-size: 12px;
+  color: var(--m3-on-surface-variant);
+}
+
+/* --- campo de URL --- */
+.omni {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 17px 22px;
+  border-radius: 26px;
+  background: rgba(var(--m3-surface-container-rgb), .55);
+  border: 1px solid rgba(var(--m3-outline-variant-rgb), .45);
+  backdrop-filter: blur(18px) saturate(1.25);
+  box-shadow: 0 18px 40px rgba(var(--m3-shadow-rgb), .35);
+  transition: border-color .18s cubic-bezier(.2,0,0,1),
+              box-shadow .18s cubic-bezier(.2,0,0,1);
+}
+.omni:focus-within {
+  border-color: rgba(var(--m3-primary-rgb), .65);
+  box-shadow: 0 22px 52px rgba(var(--m3-shadow-rgb), .45);
+}
+.omni.invalid {
+  border-color: rgba(var(--m3-error-rgb), .85);
+  animation: shake .3s cubic-bezier(.2,0,0,1);
+}
+@keyframes shake {
+  0%,100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+.omni__icon { font-size: 25px; color: var(--m3-primary); }
+.omni input {
+  flex: 1;
+  border: 0; outline: 0; background: none;
+  color: var(--m3-on-surface);
+  font: 400 18px/1.25 Rubik, sans-serif;
+}
+.omni input::placeholder { color: var(--m3-on-surface-variant); opacity: .75; }
+.omni__enter {
+  font-family: 'CaskaydiaCove NF', monospace;
+  font-size: 12px;
+  padding: 3px 9px;
+  border-radius: 8px;
+  color: var(--m3-on-surface-variant);
+  background: rgba(var(--m3-surface-container-highest-rgb), .7);
+  border: 1px solid rgba(var(--m3-outline-variant-rgb), .5);
+}
+
+/* --- grid de atalhos --- */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(152px, 1fr));
+  gap: 13px;
+}
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  padding: 17px;
+  border-radius: 22px;
+  cursor: pointer;
+  outline: 0;
+  background: rgba(var(--m3-surface-container-rgb), .45);
+  border: 1px solid rgba(var(--m3-outline-variant-rgb), .35);
+  backdrop-filter: blur(14px);
+  transition: transform .16s cubic-bezier(.2,0,0,1),
+              background .16s cubic-bezier(.2,0,0,1),
+              border-color .16s cubic-bezier(.2,0,0,1);
+}
+.card:hover, .card:focus-visible {
+  transform: translateY(-2px);
+  background: rgba(var(--m3-surface-container-high-rgb), .65);
+  border-color: rgba(var(--m3-primary-rgb), .5);
+}
+.card__icon { font-size: 27px; color: var(--m3-primary); }
+.card__name {
+  font-size: 15px; font-weight: 500;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.card__url {
+  font-family: 'CaskaydiaCove NF', monospace;
+  font-size: 11px;
+  color: var(--m3-on-surface-variant);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.card__acoes {
+  position: absolute; top: 8px; right: 8px;
+  display: flex; gap: 2px;
+  opacity: 0;
+  transition: opacity .15s;
+}
+.card:hover .card__acoes, .card:focus-within .card__acoes { opacity: 1; }
+.card__acao {
+  display: grid; place-items: center;
+  width: 26px; height: 26px;
+  border: 0; border-radius: 9px; cursor: pointer;
+  background: rgba(var(--m3-surface-container-highest-rgb), .75);
+  color: var(--m3-on-surface-variant);
+  transition: background .15s, color .15s;
+}
+.card__acao span { font-size: 16px; }
+.card__acao:hover { background: rgba(var(--m3-surface-container-highest-rgb), 1); color: var(--m3-on-surface); }
+.card__acao--remover:hover { color: var(--m3-on-error-container); background: var(--m3-error-container); }
+
+/* card fantasma que abre o formulário */
+.card--novo {
+  align-items: center; justify-content: center;
+  gap: 6px;
+  min-height: 104px;
+  background: rgba(var(--m3-surface-container-rgb), .22);
+  border-style: dashed;
+  color: var(--m3-on-surface-variant);
+}
+.card--novo:hover {
+  background: rgba(var(--m3-surface-container-rgb), .45);
+  color: var(--m3-primary);
+}
+.card--novo .card__icon { color: inherit; }
+.card--novo span:last-child { font-size: 12px; }
+
+.empty {
+  font-size: 13px; color: var(--m3-on-surface-variant); text-align: center;
+  line-height: 1.6;
+}
+
+/* --- botões --- */
+.botao {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 11px 20px; border: 0; border-radius: 999px; cursor: pointer;
+  font: 500 14px Rubik, sans-serif;
+  background: rgba(var(--m3-surface-container-highest-rgb), .8);
+  color: var(--m3-on-surface);
+  transition: background .15s cubic-bezier(.2,0,0,1);
+}
+.botao:hover { background: rgba(var(--m3-surface-container-high-rgb), 1); }
+.botao span { font-size: 18px; }
+.botao--principal { background: var(--m3-primary); color: var(--m3-on-primary); }
+.botao--principal:hover { background: var(--m3-primary-dim); }
+
+/* --- formulário de favorito --- */
+.modal {
+  position: fixed; inset: 0; z-index: 50;
+  display: grid; place-items: center;
+  padding: 24px;
+  background: rgba(var(--m3-scrim-rgb), .55);
+  backdrop-filter: blur(6px);
+  animation: surgir .16s cubic-bezier(.2,0,0,1);
+}
+.modal[hidden] { display: none; }
+@keyframes surgir { from { opacity: 0 } to { opacity: 1 } }
+
+.modal__card {
+  width: 100%; max-width: 420px;
+  display: flex; flex-direction: column; gap: 16px;
+  padding: 26px;
+  border-radius: 26px;
+  background: rgba(var(--m3-surface-container-rgb), .92);
+  border: 1px solid rgba(var(--m3-outline-variant-rgb), .5);
+  box-shadow: 0 24px 60px rgba(var(--m3-shadow-rgb), .5);
+  animation: subir .18s cubic-bezier(.2,0,0,1);
+}
+@keyframes subir { from { transform: translateY(10px) } to { transform: none } }
+
+.modal__titulo { font-size: 17px; font-weight: 500; }
+.modal__erro {
+  font-size: 12px; padding: 9px 13px; border-radius: 12px;
+  color: var(--m3-on-error-container); background: var(--m3-error-container);
+}
+.modal__erro[hidden] { display: none; }
+.modal__acoes { display: flex; gap: 9px; justify-content: flex-end; margin-top: 4px; }
+
+.campo { display: flex; flex-direction: column; gap: 6px; }
+.campo__rotulo {
+  font-size: 11px; text-transform: uppercase; letter-spacing: .06em;
+  color: var(--m3-on-surface-variant);
+}
+.campo input {
+  width: 100%;
+  padding: 11px 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(var(--m3-outline-variant-rgb), .5);
+  background: rgba(var(--m3-surface-container-lowest-rgb), .6);
+  color: var(--m3-on-surface);
+  font: 400 14px Rubik, sans-serif;
+  outline: 0;
+  transition: border-color .15s;
+}
+.campo input:focus { border-color: rgba(var(--m3-primary-rgb), .7); }
+.campo__icone { display: flex; align-items: center; gap: 10px; }
+.campo__preview {
+  display: grid; place-items: center;
+  width: 42px; height: 42px; flex: 0 0 42px;
+  border-radius: 14px;
+  font-size: 22px;
+  color: var(--m3-primary);
+  background: rgba(var(--m3-surface-container-highest-rgb), .7);
+}
+
+.sugestoes { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 2px; }
+.sugestao {
+  display: grid; place-items: center;
+  width: 30px; height: 30px;
+  border: 0; border-radius: 10px; cursor: pointer;
+  background: rgba(var(--m3-surface-container-highest-rgb), .5);
+  color: var(--m3-on-surface-variant);
+  transition: background .13s, color .13s;
+}
+.sugestao span { font-size: 17px; }
+.sugestao:hover { background: rgba(var(--m3-primary-rgb), .22); color: var(--m3-primary); }
+
+/* --- rodapé de atalhos --- */
+.keys {
+  display: flex; flex-wrap: wrap; gap: 16px; justify-content: center;
+  font-size: 11px; color: var(--m3-on-surface-variant);
+}
+.keys span { display: inline-flex; align-items: center; gap: 4px; }
+kbd {
+  font-family: 'CaskaydiaCove NF', monospace;
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 6px;
+  background: rgba(var(--m3-surface-container-highest-rgb), .6);
+  border: 1px solid rgba(var(--m3-outline-variant-rgb), .5);
+}
+
+/* --- fonte de ícone do Caelestia --- */
+.material-symbols-rounded {
+  font-family: 'Material Symbols Rounded';
+  font-weight: normal; font-style: normal;
+  line-height: 1; letter-spacing: normal; text-transform: none;
+  display: inline-block; white-space: nowrap; direction: ltr;
+  font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+}

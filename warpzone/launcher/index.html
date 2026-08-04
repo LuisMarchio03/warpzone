@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Warpzone</title>
+<style>/*__SCHEME__*/</style>
+<style>/*__STYLE__*/</style>
+</head>
+<body>
+  <main class="stage">
+    <header class="brand">
+      <svg class="brand__mark" viewBox="0 0 32 32" aria-hidden="true">
+        <ellipse cx="16" cy="11" rx="9.5" ry="4.2" fill="currentColor" opacity=".3"/>
+        <ellipse cx="16" cy="11" rx="4" ry="1.7" fill="currentColor"/>
+        <path d="M6.5 11h19v6h-19z" fill="currentColor" opacity=".9"/>
+        <path d="M9.5 17h13v10h-13z" fill="currentColor" opacity=".6"/>
+      </svg>
+      <div class="brand__text">
+        <h1>Warpzone</h1>
+        <p id="clock"></p>
+      </div>
+    </header>
+
+    <form class="omni" id="omni" autocomplete="off">
+      <span class="material-symbols-rounded omni__icon">travel_explore</span>
+      <input id="input" type="text" spellcheck="false" autofocus
+             placeholder="digite uma URL ou filtre os favoritos…">
+      <kbd class="omni__enter">↵</kbd>
+    </form>
+
+    <section class="cards" id="cards"></section>
+    <p class="empty" id="empty" hidden></p>
+  </main>
+
+  <footer class="keys">
+    <span><kbd>Ctrl</kbd><kbd>L</kbd>launcher</span>
+    <span><kbd>Ctrl</kbd><kbd>R</kbd>recarregar</span>
+    <span><kbd>Ctrl</kbd><kbd>D</kbd>favoritar</span>
+    <span><kbd>Alt</kbd><kbd>←</kbd>voltar</span>
+    <span><kbd>F11</kbd>tela cheia</span>
+    <span><kbd>Ctrl</kbd><kbd>Q</kbd>sair</span>
+  </footer>
+
+  <div class="modal" id="modal" hidden>
+    <form class="modal__card" id="form" autocomplete="off">
+      <h2 class="modal__titulo" id="form-titulo">novo favorito</h2>
+
+      <label class="campo">
+        <span class="campo__rotulo">nome</span>
+        <input id="f-nome" type="text" placeholder="Grafana" spellcheck="false">
+      </label>
+
+      <label class="campo">
+        <span class="campo__rotulo">URL</span>
+        <input id="f-url" type="text" placeholder="grafana.exemplo.dev" spellcheck="false">
+      </label>
+
+      <div class="campo">
+        <span class="campo__rotulo">ícone</span>
+        <div class="campo__icone">
+          <span class="material-symbols-rounded campo__preview" id="f-preview">public</span>
+          <input id="f-icone" type="text" placeholder="public" spellcheck="false">
+        </div>
+        <div class="sugestoes" id="sugestoes"></div>
+      </div>
+
+      <p class="modal__erro" id="f-erro" hidden></p>
+
+      <div class="modal__acoes">
+        <button type="button" class="botao" id="f-cancelar">cancelar</button>
+        <button type="submit" class="botao botao--principal">
+          <span class="material-symbols-rounded">check</span>salvar
+        </button>
+      </div>
+    </form>
+  </div>
+
+<script id="bootstrap" type="application/json">/*__BOOKMARKS__*/</script>
+<script>/*__APP_JS__*/</script>
+</body>
+</html>
