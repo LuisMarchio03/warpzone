@@ -45,3 +45,13 @@ def test_liga_a_gravacao_em_sqlite_no_caminho_certo(tmp_path):
         (str(tmp_path / "cookies.sqlite"), WebKit2.CookiePersistentStorage.SQLITE)
     ]
     assert caminho == tmp_path / "cookies.sqlite"
+
+
+def test_cookie_manager_real_ainda_tem_set_persistent_storage():
+    """_CookieManagerFalso não protege contra a API real sumir.
+
+    O WebKit2 6.0 substitui CookieManager.set_persistent_storage por
+    WebKitNetworkSession; sem este teste, essa migração deixaria o dublê
+    absorvendo a chamada e a suíte continuaria verde contra uma API extinta.
+    """
+    assert callable(WebKit2.CookieManager.set_persistent_storage)

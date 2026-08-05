@@ -11,7 +11,7 @@ sem barra de endereço, sem menu.
 [![Python](https://img.shields.io/badge/Python-3.11%2B-3776ab?style=flat-square&logo=python&logoColor=white)](#requisitos)
 [![WebKitGTK](https://img.shields.io/badge/WebKitGTK-4.1-1d99f3?style=flat-square)](#arquitetura)
 [![Dependências](https://img.shields.io/badge/depend%C3%AAncias-zero-3fb950?style=flat-square)](#requisitos)
-[![Testes](https://img.shields.io/badge/testes-65%20passing-3fb950?style=flat-square)](#desenvolvimento)
+[![Testes](https://img.shields.io/badge/testes-69%20passing-3fb950?style=flat-square)](#desenvolvimento)
 [![Licença](https://img.shields.io/badge/licen%C3%A7a-MIT-blue?style=flat-square)](LICENSE)
 
 <img src="docs/launcher.png" width="720"
@@ -155,6 +155,7 @@ warpzone/
 ├── urls.py            normalização de entrada para URL navegável
 ├── scheme.py          esquema do Caelestia → CSS custom properties
 ├── bookmarks.py       persistência dos favoritos
+├── session.py         persistência de cookies do WebKit
 ├── services.py        detecção de unit systemd parada
 ├── launcher_page.py   composição de HTML, CSS, JS e dados numa página
 └── launcher/          index.html · style.css · app.js · error.html

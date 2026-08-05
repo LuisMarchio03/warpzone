@@ -58,7 +58,7 @@ class CockpitWindow(Gtk.Window):
             base_data_directory=str(DATA_DIR),
             base_cache_directory=str(DATA_DIR / "cache"),
         )
-        # o base_data_directory acima não cobre cookie: sem esta linha o login
+        # o base_data_directory acima não cobre cookies: sem esta linha o login
         # morre junto com a janela
         session.enable_persistence(gerenciador, DATA_DIR)
         contexto = WebKit2.WebContext.new_with_website_data_manager(gerenciador)
