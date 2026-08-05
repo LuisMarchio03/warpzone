@@ -13,7 +13,7 @@ gi.require_version("WebKit2", "4.1")
 
 from gi.repository import Gdk, Gtk, WebKit2  # noqa: E402
 
-from . import bookmarks, launcher_page, scheme, services, urls  # noqa: E402
+from . import bookmarks, launcher_page, scheme, services, session, urls  # noqa: E402
 
 APP_ID = "warpzone"
 DATA_DIR = Path.home() / ".local/share/warpzone"
@@ -54,11 +54,13 @@ class CockpitWindow(Gtk.Window):
         self.set_app_paintable(True)
 
     def _montar_webview(self) -> WebKit2.WebView:
-        DATA_DIR.mkdir(parents=True, exist_ok=True)
         gerenciador = WebKit2.WebsiteDataManager(
             base_data_directory=str(DATA_DIR),
             base_cache_directory=str(DATA_DIR / "cache"),
         )
+        # o base_data_directory acima não cobre cookie: sem esta linha o login
+        # morre junto com a janela
+        session.enable_persistence(gerenciador, DATA_DIR)
         contexto = WebKit2.WebContext.new_with_website_data_manager(gerenciador)
 
         ucm = WebKit2.UserContentManager()
