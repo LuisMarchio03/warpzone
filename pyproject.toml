@@ -10,3 +10,8 @@ testpaths = ["tests"]
 addopts = "-q"
 # o pacote é usado direto da raiz (não é instalado); sem isto o import falha
 pythonpath = ["."]
+# Ignora a deprecação do PyGObject sobre GLib.unix_signal_add_full que vem ao importar WebKit2.
+# Essa é uma limitação do PyGObject, não do nosso código.
+filterwarnings = [
+    "ignore:GLib.unix_signal_add_full is deprecated.*:Warning:gi.overrides",
+]
