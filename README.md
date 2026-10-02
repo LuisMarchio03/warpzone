@@ -11,7 +11,7 @@ sem barra de endereço, sem menu.
 [![Python](https://img.shields.io/badge/Python-3.11%2B-3776ab?style=flat-square&logo=python&logoColor=white)](#requisitos)
 [![WebKitGTK](https://img.shields.io/badge/WebKitGTK-4.1-1d99f3?style=flat-square)](#arquitetura)
 [![Dependências](https://img.shields.io/badge/depend%C3%AAncias-zero-3fb950?style=flat-square)](#requisitos)
-[![Testes](https://img.shields.io/badge/testes-69%20passing-3fb950?style=flat-square)](#desenvolvimento)
+[![Testes](https://img.shields.io/badge/testes-80%20passing-3fb950?style=flat-square)](#desenvolvimento)
 [![Licença](https://img.shields.io/badge/licen%C3%A7a-MIT-blue?style=flat-square)](LICENSE)
 
 <img src="docs/launcher.png" width="720"
@@ -76,7 +76,11 @@ repositório valem na próxima abertura, sem reinstalar.
 warpzone                        # abre o launcher
 warpzone localhost:5173         # abre a URL, completando o esquema http://
 warpzone grafana.exemplo.dev    # abre a URL, completando o esquema https://
+warpzone --url https://google.com   # mesmo efeito, com a URL como parâmetro
 ```
+
+Uma entrada que não tem forma de endereço encerra com erro (código 2) em vez de abrir o launcher.
+`warpzone -h` lista as opções.
 
 O launcher também é acessível pela entrada **Warpzone** no menu de aplicativos.
 

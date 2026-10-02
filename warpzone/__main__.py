@@ -1,4 +1,4 @@
-"""Entrada do warpzone: `python3 -m warpzone [URL]`."""
+"""Entrada do warpzone: `python3 -m warpzone [URL | -url URL]`."""
 
 from __future__ import annotations
 
@@ -10,13 +10,12 @@ gi.require_version("Gtk", "3.0")
 
 from gi.repository import GLib, Gtk  # noqa: E402
 
-from . import urls  # noqa: E402
+from . import cli  # noqa: E402
 from .app import APP_ID, CockpitWindow  # noqa: E402
 
 
 def main(argv: list[str] | None = None) -> int:
-    argumentos = sys.argv[1:] if argv is None else argv
-    destino = urls.normalize(argumentos[0]) if argumentos else None
+    destino = cli.destino(sys.argv[1:] if argv is None else argv)
 
     # define o app_id que o Hyprland enxerga como "class"
     GLib.set_prgname(APP_ID)
